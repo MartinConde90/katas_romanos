@@ -1,5 +1,5 @@
 import unittest
-from romanos import *
+from romanos import romano_a_arabigo, arabigo_a_romano
 
 class RomanNumberTrest(unittest.TestCase):
 
@@ -37,6 +37,21 @@ class RomanNumberTrest(unittest.TestCase):
         self.assertEqual(romano_a_arabigo('IC'), 0)
         self.assertEqual(romano_a_arabigo('IL'), 0)
         self.assertEqual(romano_a_arabigo('VL'), 0)
+
+
+class ArabicNumberTest(unittest.TestCase):
+    def test_unidades(self):
+        self.assertEqual(arabigo_a_romano(1), 'I')
+        self.assertEqual(arabigo_a_romano(2), 'II')
+        self.assertEqual(arabigo_a_romano(4), 'IV')
+
+    def test_arabic_a_roman(self):
+        self.assertEqual(arabigo_a_romano(2123), 'MMCXXII')
+        self.assertEqual(arabigo_a_romano(2444), 'MMCDXLIV')
+        self.assertEqual(arabigo_a_romano(3555), 'MMMDLV')
+        self.assertEqual(arabigo_a_romano(1678), 'MDCLXXVIII')
+        self.assertEqual(arabigo_a_romano(2999), 'MMCMXCIX')
+
 
 if __name__ == '__main__':
     unittest.main()

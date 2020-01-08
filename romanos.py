@@ -47,3 +47,6 @@ def romano_a_arabigo(numRomano):
         ultimoCaracter = letra
 
     return numArabigo
+
+def arabigo_a_romano(valor):
+    pass
