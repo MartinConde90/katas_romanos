@@ -1,7 +1,7 @@
 import unittest
 from romanos import romano_a_arabigo, arabigo_a_romano, contarParentesis, gruposDeMil
 
-class RomanNumberTrest(unittest.TestCase):
+class RomanNumberTest(unittest.TestCase):
 
     def test_symbols_romans(self):
         self.assertEqual(romano_a_arabigo('I'), 1)
@@ -12,7 +12,6 @@ class RomanNumberTrest(unittest.TestCase):
         self.assertEqual(romano_a_arabigo('D'), 500)
         self.assertEqual(romano_a_arabigo('M'), 1000)
         self.assertEqual(romano_a_arabigo('A'), 0)
-
 
     def test_numeros_crecientes(self):
         self.assertEqual(romano_a_arabigo('XVI'), 16)
@@ -62,6 +61,10 @@ class ArabicNumberTest(unittest.TestCase):
         self.assertEqual(arabigo_a_romano(3555), 'MMMDLV')
         self.assertEqual(arabigo_a_romano(1678), 'MDCLXXVIII')
         self.assertEqual(arabigo_a_romano(2999), 'MMCMXCIX')
+
+    def test_arabic_a_roman_gt_3999(self):
+        self.assertEqual(arabigo_a_romano(4000), '(IV)')
+        self.assertEqual(arabigo_a_romano(7763147686), '(((VII)))((DCCLX))(MMMCXLVII)DCLXXXVI')
 
     def test_gruposDe1000(self):
         self.assertEqual(gruposDeMil(7763147686), [[3, 7], [2, 760],[1, 3147], [0, 686]])
