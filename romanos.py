@@ -103,7 +103,29 @@ def romano_a_arabigo(numRomano):
 def invertir(cad):
     return cad[::-1] #para darle la vuelta a la cifra
     
-def arabigo_a_romano(valor):
+def gruposDeMil(num):
+    cad = str(num)
+    dac = invertir(cad)
+    grupos = []
+    rango = 0
+
+    for i in range(0, len(cad), 3): #desde 0 hasta len, de 3 en 3
+        grupos.append([rango, int(invertir(dac[i:i+3]))]) # hacemos otro invertir para poner los numeros al derecho
+        rango += 1 #el rango son los parentesis, al leer el numero desde atras, vamos aumentando en 1 en cada grupo
+
+    for i in range(len(grupos)-1): # restamos uno a la longitud para tener el numero real de item segun python
+            grupoMenor = grupos[i] # grupo del que partimos
+            grupoMayor = grupos[i+1] # grupo siguiente con el que comparamos
+            unidadesMayor = grupoMayor[1] % 10 # si el resto de la posicion 1 del grupo (el numero, la 0 es el rango)
+                                               #  da 4 o mas, se queda donde está
+            if unidadesMayor < 4:              #si el resto da menor de 4, pertenece a los millares del grupo anterior
+                grupoMenor[1] = grupoMenor[1] + unidadesMayor * 1000 # añadimos al grupo anterior, las unidades del mayor, por mil
+                grupoMayor[1] = grupoMayor[1] - unidadesMayor    #al grupo mayor le quitamos sus unidades
+
+    grupos.reverse()
+    return grupos
+
+def arabigo_individual(valor):
     cad = invertir(str(valor))
     res = ''
 
@@ -121,3 +143,18 @@ def arabigo_a_romano(valor):
             res += rangos[i][1]+rangos[i]['next']
 
     return res
+
+def arabigo_a_romano(valor):
+    g1000 = gruposDeMil(valor)
+    romanoGlobal = ''
+
+    for grupo in g1000:
+        rango = grupo[0]
+        numero = grupo[1]
+        if numero > 0:
+            miRomano = '(' * rango + arabigo_individual(numero) + ')'*rango
+        else: 
+            miRomano = ''
+        romanoGlobal += miRomano
+
+    return romanoGlobal
